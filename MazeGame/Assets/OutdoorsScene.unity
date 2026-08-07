@@ -425,7 +425,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  - {fileID: 2100000, guid: c32975ff0401e754eb4d2a05c110bb5d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -512,7 +512,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 402284661}
-  - component: {fileID: 402284660}
+  - component: {fileID: 402284662}
   m_Layer: 0
   m_Name: MazeGenerator
   m_TagString: Untagged
@@ -520,22 +520,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &402284660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 402284659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52f5b29c70d70d9499f20357e2010a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MazeGenerator
-  mazeCell: {fileID: 8487615347948639356, guid: 5453f432bc2378d4794e78e67c9913cb, type: 3}
-  mazeWidth: 20
-  mazeDepth: 20
-  size: 2
 --- !u!4 &402284661
 Transform:
   m_ObjectHideFlags: 0
@@ -551,6 +535,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &402284662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402284659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52f5b29c70d70d9499f20357e2010a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MazeGenerator
+  _mazeCellPrefab: {fileID: 7355385424519593344, guid: 3ec8ba112673e1249b25730d41920347, type: 3}
+  _mazeWidth: 40
+  _mazeDepth: 40
+  size: 5
 --- !u!1 &432432459
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,14 +15,14 @@ public class MazeCell : MonoBehaviour
     private GameObject backWall;
 
     [SerializeField]
-    private GameObject unvisitedBlock;
+    private GameObject UnvisitedBlock;
 
-    public bool isVisited { get; private set; }
-
-    public void visit()
+    public bool IsVisited { get; private set;}
+    
+    public void Visit()
     {
-        isVisited = true;
-        unvisitedBlock.SetActive(false);
+        IsVisited = true;
+        UnvisitedBlock.SetActive(false);
     }
 
     public void ClearLeftWall()
@@ -39,10 +39,9 @@ public class MazeCell : MonoBehaviour
     {
         frontWall.SetActive(false);
     }
-    
+
     public void ClearBackWall()
     {
         backWall.SetActive(false);
     }
-
 }

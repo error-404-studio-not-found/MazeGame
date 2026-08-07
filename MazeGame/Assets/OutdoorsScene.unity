@@ -119,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &25986809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 25986811}
+  - component: {fileID: 25986810}
+  m_Layer: 0
+  m_Name: ClearingGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &25986810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25986809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eb2b8e702a831444a6ee2e19f92a38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearingGen
+  m_Generator: {fileID: 402284662}
+  mazeCell: {fileID: 7355385424519593344, guid: 3ec8ba112673e1249b25730d41920347, type: 3}
+  wallPrefab: {fileID: 4794925865554906485, guid: 3ec8ba112673e1249b25730d41920347, type: 3}
+  gatePrefab: {fileID: 0}
+  cellWidth: 11
+--- !u!4 &25986811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25986809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1201.0499, y: -0, z: 1198.4099}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &157207112
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +515,7 @@ Transform:
   m_GameObject: {fileID: 160955619}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.02566, y: -0, z: -5.97454}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -551,7 +600,7 @@ MonoBehaviour:
   _mazeWidth: 80
   _mazeDepth: 80
   size: 30
-  _centralClearSize: 10
+  _centralClearSize: 11
 --- !u!1 &432432459
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,7 +677,7 @@ Transform:
   m_GameObject: {fileID: 731761896}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.45, z: 0}
+  m_LocalPosition: {x: 1200, y: 1, z: 1200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -684,6 +733,7 @@ MonoBehaviour:
   jumpKey: 32
   sprintKey: 304
   crouchKey: 306
+  climbKey: 119
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -692,9 +742,11 @@ MonoBehaviour:
   isClimbable:
     serializedVersion: 2
     m_Bits: 128
-  vinesClimbing: 0
-  checkDistance: 5
+  climbing: 0
   climbSpeed: 3
+  checkDistance: 0.7
+  sphereRadius: 0.25
+  maxWallAngle: 40
   oreintation: {fileID: 2024590091}
 --- !u!1 &1222530656
 GameObject:
@@ -1227,3 +1279,4 @@ SceneRoots:
   - {fileID: 1222530658}
   - {fileID: 1573943996}
   - {fileID: 402284661}
+  - {fileID: 25986811}

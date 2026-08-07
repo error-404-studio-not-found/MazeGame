@@ -11,7 +11,14 @@ public class OnWallObj : MonoBehaviour
 
         if (Random.value < 0.2f && vines != null)
         {
-            GameObject clone = Instantiate(vines, new Vector3(3, -5, 0), Quaternion.identity);
+            GameObject clone = null;
+
+            if (Random.value < 0.2f)
+               clone = Instantiate(vines, new Vector3(3, -5, 0), Quaternion.identity);
+            else
+               clone = Instantiate(vines, new Vector3(-3, -5, 0), Quaternion.identity);
+
+
             clone.transform.SetParent(transform, false);
             clone.transform.rotation = transform.rotation;
 

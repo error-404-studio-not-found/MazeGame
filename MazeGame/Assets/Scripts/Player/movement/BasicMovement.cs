@@ -18,6 +18,7 @@ public class BasicMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
     public KeyCode crouchKey = KeyCode.LeftControl;
+    public KeyCode climbKey = KeyCode.W;
 
     [Header("Ground Check")]
     public LayerMask groundLayer;
@@ -26,9 +27,19 @@ public class BasicMovement : MonoBehaviour
 
     [Header("Climbing")]
     public LayerMask isClimbable;
-    public bool vinesClimbing;
-    public float checkDistance;
+    public bool climbing;
     public float climbSpeed;
+
+
+    [Header("ClimbingDetection")]
+    public float checkDistance;
+    public float sphereRadius;
+    public float maxWallAngle;
+    private float wallAngle;
+
+    private RaycastHit frontWallHit;
+    private bool wallFront;
+
 
 
     [Header("Other")]
@@ -58,13 +69,18 @@ public class BasicMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
 
 
-
+        wallCheck();
 
 
 
         MyInputs();
         controlSpeed();
 
+        // climging movement
+        if (climbing) climbingMovement();
+
+
+        // handle drag
         if (grounded)
         {
             rb.linearDamping = groundDrag;
@@ -86,7 +102,7 @@ public class BasicMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if ((Input.GetKey(jumpKey) && readyToJump && grounded))
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
            
              readyToJump = false;
@@ -108,6 +124,19 @@ public class BasicMovement : MonoBehaviour
         {
             moveSpeed = defaultMoveSpeed / 2f;
 
+        }
+
+        if (Input.GetKey(climbKey) && wallFront && wallAngle < maxWallAngle)
+        {
+
+            startClimb();
+        }
+        else
+        {
+            if (climbing)
+            {
+                stopClimb();
+            }
         }
     }
 
@@ -145,8 +174,32 @@ public class BasicMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
+    
     private void ResetJump()
     {
         readyToJump = true;
     }
+
+    // --- Climbing ---
+    private void wallCheck()
+    {
+        wallFront = Physics.SphereCast(transform.position, sphereRadius, oreintation.forward, out frontWallHit, checkDistance, isClimbable);
+        wallAngle = Vector3.Angle(oreintation.forward, -frontWallHit.normal);
+    }
+
+    private void startClimb()
+    {
+        climbing = true;
+    }
+
+    private void climbingMovement()
+    {
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, climbSpeed, rb.linearVelocity.z);
+    }
+
+    private void stopClimb()
+    {
+        climbing = false;
+    }
+
 }

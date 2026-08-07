@@ -4,6 +4,7 @@ public class BasicMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    private float defaultMoveSpeed;
 
     public float groundDrag;
 
@@ -15,6 +16,8 @@ public class BasicMovement : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Ground Check")]
     public LayerMask groundLayer;
@@ -36,6 +39,8 @@ public class BasicMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        defaultMoveSpeed = moveSpeed;
     }
 
     // Update is called once per frame
@@ -73,6 +78,21 @@ public class BasicMovement : MonoBehaviour
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        if (Input.GetKey(sprintKey) && grounded)
+        {
+            moveSpeed = defaultMoveSpeed * 2f;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+        }
+
+        if (Input.GetKey(crouchKey) && grounded)
+        {
+            moveSpeed = defaultMoveSpeed / 2f;
+
         }
     }
 

@@ -548,9 +548,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MazeGenerator
   _mazeCellPrefab: {fileID: 7355385424519593344, guid: 3ec8ba112673e1249b25730d41920347, type: 3}
-  _mazeWidth: 40
-  _mazeDepth: 40
-  size: 5
+  _mazeWidth: 60
+  _mazeDepth: 60
+  size: 15
+  _centralClearSize: 10
 --- !u!1 &432432459
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +682,8 @@ MonoBehaviour:
   jumpCooldown: 0.5
   airMultiplier: 0.5
   jumpKey: 32
+  sprintKey: 304
+  crouchKey: 306
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

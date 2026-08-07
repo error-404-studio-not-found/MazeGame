@@ -18,6 +18,9 @@ public class MazeGenerator : MonoBehaviour
 
     public int size = 5;
 
+    [SerializeField]
+    private int _centralClearSize = 3;
+
     void Start()
     {
 
@@ -36,6 +39,57 @@ public class MazeGenerator : MonoBehaviour
         }
 
         GenerateMaze(null, _mazeGrid[0, 0]);
+
+        CreateCentralClearing(_centralClearSize);
+
+    }
+
+    private void CreateCentralClearing(int clearSize)
+    {
+        if (clearSize <= 0) return;
+
+        int centerX = _mazeWidth / 2;
+        int centerZ = _mazeDepth / 2;
+        int half = clearSize / 2;
+
+        int startX = Mathf.Clamp(centerX - half, 0, _mazeWidth - 1);
+        int endX = Mathf.Clamp(startX + clearSize - 1, 0, _mazeWidth - 1);
+
+        int startZ = Mathf.Clamp(centerZ - half, 0, _mazeDepth - 1);
+        int endZ = Mathf.Clamp(startZ + clearSize - 1, 0, _mazeDepth - 1);
+
+        for (int x = startX; x <= endX; x++)
+        {
+            for (int z = startZ; z <= endZ; z++)
+            {
+                var cell = _mazeGrid[x, z];
+                if (cell == null) continue;
+
+                // mark visited so generator won't carve into the clearing
+                cell.Visit();
+
+                // clear this cell's walls and matching neighbor walls to avoid half-walls
+                // left
+                cell.ClearLeftWall();
+                if (x - 1 >= 0 && _mazeGrid[x - 1, z] != null)
+                    _mazeGrid[x - 1, z].ClearRightWall();
+
+                // right
+                cell.ClearRightWall();
+                if (x + 1 < _mazeWidth && _mazeGrid[x + 1, z] != null)
+                    _mazeGrid[x + 1, z].ClearLeftWall();
+
+                // front (z+1)
+                cell.ClearFrontWall();
+                if (z + 1 < _mazeDepth && _mazeGrid[x, z + 1] != null)
+                    _mazeGrid[x, z + 1].ClearBackWall();
+
+                // back (z-1)
+                cell.ClearBackWall();
+                if (z - 1 >= 0 && _mazeGrid[x, z - 1] != null)
+                    _mazeGrid[x, z - 1].ClearFrontWall();
+            }
+        }
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -115,6 +169,8 @@ public class MazeGenerator : MonoBehaviour
         {
             return;
         }
+
+
 
         if (previousCell.transform.position.x < currentCell.transform.position.x)
         {

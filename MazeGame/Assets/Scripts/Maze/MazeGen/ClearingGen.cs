@@ -23,6 +23,10 @@ public class ClearingGen : MonoBehaviour
         // center this object on the maze (optional)
         transform.position = new Vector3((m_Generator._mazeWidth * m_Generator.size) / 2f, 0f, (m_Generator._mazeDepth * m_Generator.size) / 2f);
 
+        // Set the cellWidth to the central clear size defined in the MazeGenerator
+        cellWidth = m_Generator._centralClearSize;
+
+        // Generate the base walls of the clearing
         genBaseWalls();
     }
 
@@ -55,42 +59,73 @@ public class ClearingGen : MonoBehaviour
                 {
                     MazeCell clone;
 
+                    // dont instantiate a cell in the center of the square to leave a gap for the player to walk through
                     if (worldPos.x != startX * m_Generator.size + half * m_Generator.size)
                     {
                         clone = Instantiate(mazeCell, worldPos, Quaternion.identity, transform);
 
-                        if (worldPos.x == startX * m_Generator.size)
+                        // clear the top right corner to reduce the number of walls in the maze
+                        if (worldPos.z == (startZ + cellWidth - 1) * m_Generator.size && worldPos.x == (startX + cellWidth - 1) * m_Generator.size)
+                        {
+                            clone.Visit();
+                            clone.ClearLeftWall();
+                            clone.ClearBackWall();
+                        }
+                        // clear the top left corner to reduce the number of walls in the maze
+                        else if (worldPos.z == (startZ + cellWidth - 1) * m_Generator.size && worldPos.x == startX * m_Generator.size)
+                        {
+                            clone.Visit();
+                            clone.ClearRightWall();
+                            clone.ClearBackWall();
+                        }
+                        // clear the bottom right corner to reduce the number of walls in the maze
+                        else if (worldPos.z == startZ * m_Generator.size && worldPos.x == (startX + cellWidth - 1) * m_Generator.size)
+                        {
+                            clone.Visit();
+                            clone.ClearLeftWall();
+                            clone.ClearFrontWall();
+                        }
+                        // clear the bottom left corner to reduce the number of walls in the maze
+                        else if (worldPos.z == startZ * m_Generator.size && worldPos.x == startX * m_Generator.size)
+                        {
+                            clone.Visit();
+                            clone.ClearRightWall();
+                            clone.ClearFrontWall();
+                        }
+                        // clear the left wall of the leftmost cells to reduce the number of walls in the maze
+                        else if (worldPos.x == startX * m_Generator.size)
                         {
                             clone.Visit();
                             clone.ClearRightWall();
                             clone.ClearFrontWall();
                             clone.ClearBackWall();
                         }
-                        
-                        if (worldPos.x == (startX + cellWidth - 1) * m_Generator.size)
+                        // clear the right wall of the rightmost cells to reduce the number of walls in the maze
+                        else if (worldPos.x == (startX + cellWidth - 1) * m_Generator.size)
                         {
                             clone.Visit();
                             clone.ClearLeftWall();
                             clone.ClearFrontWall();
                             clone.ClearBackWall();
                         }
-                        
-                        if (worldPos.z == startZ * m_Generator.size)
-                        {
-                            clone.Visit();
-                            clone.ClearLeftWall();
-                            clone.ClearRightWall();
-                            clone.ClearBackWall();
-                        }
-                        
-                        if (worldPos.z == (startZ + cellWidth - 1) * m_Generator.size)
+                        // clear the front wall of the bottom cells to reduce the number of walls in the maze
+                        else if (worldPos.z == startZ * m_Generator.size)
                         {
                             clone.Visit();
                             clone.ClearLeftWall();
                             clone.ClearRightWall();
                             clone.ClearFrontWall();
+                        }
+                        // clear the back wall of the top cells to reduce the number of walls in the maze
+                        else if (worldPos.z == (startZ + cellWidth - 1) * m_Generator.size)
+                        {
+                            clone.Visit();
+                            clone.ClearLeftWall();
+                            clone.ClearRightWall();
+                            clone.ClearBackWall();
 
                         }
+
 
 
 

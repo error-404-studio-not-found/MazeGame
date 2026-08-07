@@ -548,9 +548,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MazeGenerator
   _mazeCellPrefab: {fileID: 7355385424519593344, guid: 3ec8ba112673e1249b25730d41920347, type: 3}
-  _mazeWidth: 60
-  _mazeDepth: 60
-  size: 15
+  _mazeWidth: 80
+  _mazeDepth: 80
+  size: 30
   _centralClearSize: 10
 --- !u!1 &432432459
 GameObject:
@@ -689,6 +689,12 @@ MonoBehaviour:
     m_Bits: 64
   playerHeight: 2
   grounded: 0
+  isClimbable:
+    serializedVersion: 2
+    m_Bits: 128
+  vinesClimbing: 0
+  checkDistance: 5
+  climbSpeed: 3
   oreintation: {fileID: 2024590091}
 --- !u!1 &1222530656
 GameObject:

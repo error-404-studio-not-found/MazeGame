@@ -8,15 +8,15 @@ public class OnWallObj : MonoBehaviour
 
     void Start()
     {
+
+        if (Random.value < 0.2f && vines != null)
+        {
+            GameObject clone = Instantiate(vines, new Vector3(3, -5, 0), Quaternion.identity);
+            clone.transform.SetParent(transform, false);
+            clone.transform.rotation = transform.rotation;
+
+        }
         
-        if (Random.value < 0.2f)
-        {
-            vines.SetActive(true);
-        }
-        else
-        {
-            vines.SetActive(false);
-        }
 
     }
 

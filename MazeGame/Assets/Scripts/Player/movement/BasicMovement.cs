@@ -24,6 +24,14 @@ public class BasicMovement : MonoBehaviour
     public float playerHeight;
     public bool grounded;
 
+    [Header("Climbing")]
+    public LayerMask isClimbable;
+    public bool vinesClimbing;
+    public float checkDistance;
+    public float climbSpeed;
+
+
+    [Header("Other")]
     public Transform oreintation;
 
     float horizontalInput;
@@ -46,7 +54,12 @@ public class BasicMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundLayer);
+
+
+
+
 
 
         MyInputs();
@@ -73,11 +86,13 @@ public class BasicMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if ((Input.GetKey(jumpKey) && readyToJump && grounded))
         {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
+           
+             readyToJump = false;
+             Jump();
+             Invoke(nameof(ResetJump), jumpCooldown);
+
         }
 
         if (Input.GetKey(sprintKey) && grounded)

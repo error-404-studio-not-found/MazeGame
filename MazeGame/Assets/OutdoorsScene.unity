@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Generator: {fileID: 402284662}
   mazeCell: {fileID: 7355385424519593344, guid: 3ec8ba112673e1249b25730d41920347, type: 3}
   wallPrefab: {fileID: 4794925865554906485, guid: 3ec8ba112673e1249b25730d41920347, type: 3}
-  gatePrefab: {fileID: 0}
+  gatePrefab: {fileID: 6157173857651006465, guid: 3850ab5c06a10d84399dfc06430005ad, type: 3}
   cellWidth: 11
 --- !u!4 &25986811
 Transform:

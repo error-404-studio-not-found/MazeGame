@@ -1,4 +1,5 @@
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ClearingGen : MonoBehaviour
@@ -129,21 +130,22 @@ public class ClearingGen : MonoBehaviour
 
 
 
-                        else
-                        {
-                            spawnGate();
+                        
+                    }
+                    else
+                    {
+                        spawnGate(worldPos);
 
-                        }
                     }
                 }
             }
         }
     }
 
-    private void spawnGate()
+    private void spawnGate(Vector3 worldPos)
     {
-
+        GameObject clone;
+        clone = Instantiate(gatePrefab, worldPos, Quaternion.identity, transform);
     }
 
-}
-    
+}    

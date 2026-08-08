@@ -134,7 +134,26 @@ public class ClearingGen : MonoBehaviour
                     }
                     else
                     {
-                        spawnGate(worldPos);
+                        GameObject clone2;
+                        clone2 = Instantiate(gatePrefab, worldPos, Quaternion.identity, transform);
+
+                        MazeCell gate = clone2.GetComponent<MazeCell>();
+
+                        if (worldPos.z == startZ * m_Generator.size)
+                        {
+                            gate.Visit();
+                            gate.ClearLeftWall();
+                            gate.ClearRightWall();
+                            gate.ClearFrontWall();
+                        }
+                        else if (worldPos.z == (startZ + cellWidth - 1) * m_Generator.size)
+                        {
+                            gate.Visit();
+                            gate.ClearLeftWall();
+                            gate.ClearRightWall();
+                            gate.ClearBackWall();
+
+                        }
 
                     }
                 }
@@ -144,8 +163,10 @@ public class ClearingGen : MonoBehaviour
 
     private void spawnGate(Vector3 worldPos)
     {
-        GameObject clone;
-        clone = Instantiate(gatePrefab, worldPos, Quaternion.identity, transform);
+        
+
+
+
     }
 
 }    

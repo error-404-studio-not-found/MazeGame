@@ -8,7 +8,11 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     private MazeCell _mazeCellPrefab;
 
-    
+    [SerializeField]
+    private MazeCell SpawnLocation;
+
+
+
     public int _mazeWidth;
 
     

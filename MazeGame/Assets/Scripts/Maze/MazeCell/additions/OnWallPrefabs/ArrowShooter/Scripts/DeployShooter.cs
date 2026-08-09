@@ -30,7 +30,8 @@ public class DeployShooter : MonoBehaviour
     void Start()
     {
 
-        maxChange = transform.localPosition.x - 5f; minChange = transform.localPosition.x;
+        maxChange = transform.localPosition.x - 5f; 
+        minChange = transform.localPosition.x;
 
 
     }

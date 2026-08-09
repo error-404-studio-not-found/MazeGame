@@ -515,7 +515,7 @@ Transform:
   m_GameObject: {fileID: 160955619}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.001, z: 0}
   m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -829,7 +829,7 @@ GameObject:
   - component: {fileID: 844676591}
   - component: {fileID: 844676587}
   m_Layer: 6
-  m_Name: TerrainGenerator
+  m_Name: ClearingTerrainGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -856,6 +856,36 @@ MonoBehaviour:
   heightScale: 30
   noiseOffset: {x: 0, y: 0}
   seed: 124324
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0.5660378, g: 0.47835374, b: 0.29636884, a: 1}
+    key1: {r: 0.561725, g: 0.47627953, b: 0.2942021, a: 1}
+    key2: {r: 0.5377358, g: 0.4388127, b: 0.24096651, a: 0}
+    key3: {r: 0.274785, g: 0.3382759, b: 0.15004252, a: 0}
+    key4: {r: 0.25236514, g: 0.32749307, b: 0.1387787, a: 0}
+    key5: {r: 0.21873939, g: 0.31132078, b: 0.12188502, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 31033
+    ctime2: 33021
+    ctime3: 35659
+    ctime4: 62644
+    ctime5: 65535
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 6
+    m_NumAlphaKeys: 2
   useEdgeDivots: 1
   divotRadius: 10
   divotBlend: 90
@@ -886,7 +916,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4fe3183bc3f4bae42b2c00d1a54aca35, type: 2}
+  - {fileID: -876546973899608171, guid: cdff2e084c187c246ab717994233dac6, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

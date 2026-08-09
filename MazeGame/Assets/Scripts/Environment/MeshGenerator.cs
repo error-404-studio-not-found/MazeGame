@@ -9,6 +9,8 @@ public class MeshGenerator : MonoBehaviour
 
     Vector3[] vertices;
     int[] triangles;
+    Color[] colors;
+    Vector2[] uvs;
 
     public int xSize = 20;
     public int zSize = 20;
@@ -21,6 +23,14 @@ public class MeshGenerator : MonoBehaviour
     public float heightScale = 2f;
     public Vector2 noiseOffset = Vector2.zero;
     public int seed = 0;
+
+    public Gradient gradient;
+
+    private float minHeight;
+
+    private float maxHeight;
+
+
 
     [Header("Edge Divots (circular bays at center-left and center-right)")]
     [Tooltip("Carves an organic, circular divot into the terrain at the vertical center of the left edge and the right edge.")]
@@ -66,6 +76,11 @@ public class MeshGenerator : MonoBehaviour
                     y *= EdgeDivotMask(x, z);
                 }
 
+                if (y > maxHeight)
+                    maxHeight = y;
+                if (y < minHeight)
+                    minHeight = y;
+
                 vertices[i] = new Vector3(x, y, z);
                 i++;
             }
@@ -92,6 +107,33 @@ public class MeshGenerator : MonoBehaviour
             }
 
             vert++;
+        }
+
+
+
+
+        colors = new Color[vertices.Length];
+        uvs = new Vector2[vertices.Length];
+
+
+        for (int i = 0, z = 0; z <= zSize; z++)
+        {
+            for (int x = 0; x <= xSize; x++)
+            {
+
+
+                float height = Mathf.InverseLerp(minHeight, maxHeight, vertices[i].y);
+                colors[i] = gradient.Evaluate(height);
+
+
+                uvs[i] = new Vector2((float)x / xSize, (float)z / zSize);
+
+
+
+
+                i++;
+
+            }
         }
     }
 
@@ -147,6 +189,9 @@ public class MeshGenerator : MonoBehaviour
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.uv = uvs;
+        mesh.colors = colors;
+
 
         mesh.RecalculateNormals();
 

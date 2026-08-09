@@ -21,6 +21,9 @@ public class DeployShooter : MonoBehaviour
 
     private float minChange;
 
+    private bool leftDuringDeploy = false;
+    private bool enteredDuringRetract = false;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,7 +32,6 @@ public class DeployShooter : MonoBehaviour
 
         maxChange = transform.localPosition.x - 5f; minChange = transform.localPosition.x;
 
-        Debug.Log("max change " + maxChange + " min change " + minChange);
 
     }
 
@@ -47,8 +49,9 @@ public class DeployShooter : MonoBehaviour
 
 
 
-        if (transform.localPosition.x > maxChange)
+        if (!triggered && transform.localPosition.x == minChange)
             StartCoroutine(deployDelay());
+
     }
 
    
@@ -58,8 +61,11 @@ public class DeployShooter : MonoBehaviour
         deployed = false;
 
 
-        if (transform.localPosition.x < minChange)
+        if (!triggered && transform.localPosition.x == maxChange)
+        {
             StartCoroutine(deployDelay());
+        }
+            
 
 
 
@@ -67,9 +73,11 @@ public class DeployShooter : MonoBehaviour
     IEnumerator deployDelay()
     {
 
+        triggered = true;
+
         Debug.Log("waiting");
 
-        yield return new WaitUntil(() => !isdeploying);
+        yield return new WaitUntil(() => !isdeploying || !triggered);
 
         StartCoroutine(OnTimerComplete());
 

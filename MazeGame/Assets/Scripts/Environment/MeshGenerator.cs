@@ -22,6 +22,18 @@ public class MeshGenerator : MonoBehaviour
     public Vector2 noiseOffset = Vector2.zero;
     public int seed = 0;
 
+    [Header("Edge Divots (circular bays at center-left and center-right)")]
+    [Tooltip("Carves an organic, circular divot into the terrain at the vertical center of the left edge and the right edge.")]
+    public bool useEdgeDivots = true;
+    [Tooltip("Radius, in grid units, of the fully-carved (height 0) core of each divot.")]
+    public float divotRadius = 6f;
+    [Tooltip("Extra grid units beyond divotRadius over which the divot blends back up to full height.")]
+    public float divotBlend = 4f;
+    [Tooltip("How far (in grid units) the divot's rim wanders from a perfect circle, for an organic edge.")]
+    public float divotNoiseStrength = 2f;
+    [Tooltip("Scale of the noise driving that wander. Smaller = broader, slower ripples around the rim.")]
+    public float divotNoiseScale = 0.15f;
+
     void Start()
     {
         seed = Random.Range(0, 999);
@@ -48,6 +60,12 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= xSize; x++)
             {
                 float y = PerlinGenerator(x, z) * heightScale;
+
+                if (useEdgeDivots)
+                {
+                    y *= EdgeDivotMask(x, z);
+                }
+
                 vertices[i] = new Vector3(x, y, z);
                 i++;
             }
@@ -102,6 +120,25 @@ public class MeshGenerator : MonoBehaviour
 
         if (totalAmplitude > 0f) noiseHeight /= totalAmplitude;
         return noiseHeight;
+    }
+
+    // 0 inside 'divotRadius' of either the left-edge or right-edge center
+    // point, blending up to 1 over the next 'divotBlend' units. A noise
+    // sample perturbs the distance itself so each rim reads as an organic,
+    // hand-carved bay rather than a perfect circle.
+    float EdgeDivotMask(int x, int z)
+    {
+        float centerZ = zSize / 2f;
+
+        float wobble = (Mathf.PerlinNoise(x * divotNoiseScale + seed, z * divotNoiseScale + seed) - 0.5f) * 2f * divotNoiseStrength;
+
+        float distLeft = Vector2.Distance(new Vector2(x, z), new Vector2(0f, centerZ)) + wobble;
+        float distRight = Vector2.Distance(new Vector2(x, z), new Vector2(xSize, centerZ)) + wobble;
+
+        float dist = Mathf.Min(distLeft, distRight);
+
+        float t = Mathf.Clamp01((dist - divotRadius) / Mathf.Max(divotBlend, 0.0001f));
+        return t * t * (3f - 2f * t); // smoothstep for an eased, organic blend
     }
 
     void UpdateMesh()

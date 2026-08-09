@@ -798,7 +798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DayNightCycle
   SunLight: {fileID: 157207112}
   cycleMinutes: 10
-  useUnscaledTime: 1
+  useUnscaledTime: 0
 --- !u!4 &810034669
 Transform:
   m_ObjectHideFlags: 0
@@ -937,7 +937,7 @@ GameObject:
   - component: {fileID: 1583615071}
   m_Layer: 0
   m_Name: PlayerObj
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

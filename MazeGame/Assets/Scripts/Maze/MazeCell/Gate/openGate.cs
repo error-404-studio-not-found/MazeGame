@@ -1,11 +1,20 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class openGate : MonoBehaviour
 {
     public GameObject leftGate;
     public GameObject rightGate;
-    private float openSpeed = 30f; // Speed at which the gates open
+
+    // Duration (seconds) for the gate opening/closing movement
+    [SerializeField]
+    private float openSpeed = 30f;
+
+    // Curve that maps normalized time [0..1] -> interpolation value [0..1]
+    // Set this in the Inspector. Default is ease-in-out.
+    [SerializeField]
+    private AnimationCurve openCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     [SerializeField] 
     private int startingTime = 60;
@@ -14,13 +23,11 @@ public class openGate : MonoBehaviour
 
     public bool openGates = false;
 
+    public bool killPlayerB = false;
+
     [SerializeField]
     private BoxCollider killCol;
 
-    [SerializeField]
-    private Health health;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         openSpeed = 30;
@@ -30,38 +37,26 @@ public class openGate : MonoBehaviour
         StartCoroutine(OnTimerComplete());
 
         GameObject player = GameObject.FindWithTag("player");
-
     }
 
     private IEnumerator TimerTick()
     {
-
         timeRemaining = startingTime;
 
         while (timeRemaining > 0)
         {
-
-            // Wait exactly 1 real-time second before continuing the loop
             yield return new WaitForSeconds(1f);
-
             timeRemaining--;
         }
 
-
         Debug.Log("Time has run out!");
         yield return StartCoroutine(OnTimerComplete());
-
     }
 
     private IEnumerator OnTimerComplete()
     {
 
-        GameObject player = GameObject.FindWithTag("player");
-
-        health = player.GetComponent<Health>();
-
         openGates = !openGates;
-
 
         if (openGates)
         {
@@ -84,42 +79,22 @@ public class openGate : MonoBehaviour
 
         float t = 0f;
 
-
-
         var startPosLeft = leftGate.transform.position;
         var startPosRight = rightGate.transform.position;
 
+        // Use the curve to control interpolation over the duration
         while (t < openSpeed)
         {
             t += Time.deltaTime;
+            float normalized = Mathf.Clamp01(t / openSpeed);          // 0..1
+            float curveT = openCurve.Evaluate(normalized);           // remapped by curve
 
-            leftGate.transform.position = Vector3.Lerp(startPosLeft,startPosLeft + new Vector3(directonToMoveLeft, 0f, 0f), t / openSpeed);
-            rightGate.transform.position = Vector3.Lerp(startPosRight,startPosRight + new Vector3(directonToMoveRight, 0f, 0f), t / openSpeed);
-
+            leftGate.transform.position = Vector3.Lerp(startPosLeft, startPosLeft + new Vector3(directonToMoveLeft, 0f, 0f), curveT);
+            rightGate.transform.position = Vector3.Lerp(startPosRight, startPosRight + new Vector3(directonToMoveRight, 0f, 0f), curveT);
 
             yield return null;
-
-        }
-
-        if (!openGates)
-        {
-
-            killCol.enabled = true;
-            OnTriggerEnter(killCol);
-
         }
 
         StartCoroutine(TimerTick());
-
-    }
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        
-        if (other.CompareTag("player"))
-            health.playerHealth = 0;
-
-
     }
 }

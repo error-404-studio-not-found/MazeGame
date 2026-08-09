@@ -323,10 +323,10 @@ MonoBehaviour:
   moonPhase: 0.2
   moonPhaseRotation: 0
   earthshine: 1
-  flareSize: 2
+  flareSize: 0.3
   flareTint: {r: 1, g: 1, b: 1, a: 1}
   flareFalloff: 4
-  flareMultiplier: 1
+  flareMultiplier: 0.165
   surfaceTexture: {fileID: 0}
   surfaceTint: {r: 1, g: 1, b: 1, a: 1}
   m_Distance: 1.5e+11
@@ -679,7 +679,7 @@ Transform:
   m_GameObject: {fileID: 731761896}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1200, y: 180, z: 1200}
+  m_LocalPosition: {x: 1200, y: 40, z: 1200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -766,6 +766,9 @@ MonoBehaviour:
   respawnPoint: {fileID: 1529434141}
   rb: {fileID: 731761898}
   movement: {fileID: 731761899}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   respawnTime: 3
 --- !u!1 &810034667
 GameObject:
@@ -1056,7 +1059,7 @@ Transform:
   m_GameObject: {fileID: 1529434140}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1200, y: 939, z: 1200}
+  m_LocalPosition: {x: 1200, y: 40, z: 1200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

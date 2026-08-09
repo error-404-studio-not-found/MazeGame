@@ -15,11 +15,21 @@ public class DeployShooter : MonoBehaviour
 
     private bool deployed = false;
 
+    private bool triggered = false;
+
+    private float maxChange;
+
+    private float minChange;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        maxChange = transform.localPosition.x - 5f; minChange = transform.localPosition.x;
+
+        Debug.Log("max change " + maxChange + " min change " + minChange);
 
     }
 
@@ -35,7 +45,10 @@ public class DeployShooter : MonoBehaviour
         deployed = true;
 
 
-        StartCoroutine(deployDelay());
+
+
+        if (transform.localPosition.x > maxChange)
+            StartCoroutine(deployDelay());
     }
 
    
@@ -45,7 +58,8 @@ public class DeployShooter : MonoBehaviour
         deployed = false;
 
 
-        StartCoroutine(deployDelay());
+        if (transform.localPosition.x < minChange)
+            StartCoroutine(deployDelay());
 
 
 
@@ -82,7 +96,11 @@ public class DeployShooter : MonoBehaviour
 
 
 
-        var startPosLeft = transform.position;
+        var startPosLeft = transform.localPosition;
+
+        Debug.Log("start pos =" + startPosLeft);
+
+        
 
         while (t < deployTime)
         {
@@ -90,13 +108,15 @@ public class DeployShooter : MonoBehaviour
 
             t += Time.deltaTime;
 
-            transform.position = Vector3.Lerp(startPosLeft, startPosLeft + new Vector3(0f, 0f, moveDirecZ), t / deployTime);
+            transform.localPosition = Vector3.Lerp(startPosLeft, startPosLeft + new Vector3(moveDirecZ, 0f, 0f), t / deployTime);
 
 
             yield return null;
 
         }
 
+
+        triggered = false;
         isdeploying = false;
     }
 }

@@ -31,13 +31,36 @@ public class OnWallObj : MonoBehaviour
             GameObject clone = null;
 
             if (Random.value < 0.5f)
-                clone = Instantiate(arrowShooter, new Vector3(15, -33, 30), Quaternion.identity);
+            {
+                clone = Instantiate(arrowShooter, new Vector3(10, -32, 0), Quaternion.identity);
+
+                
+                clone.transform.SetParent(transform, false);   
+                clone.transform.localRotation = Quaternion.identity;
+
+                clone.transform.localPosition = new Vector3( 10, -32, 0f );
+            }
             else
-                clone = Instantiate(arrowShooter, new Vector3(-15, -33, 30), Quaternion.identity);
+            {
+                clone = Instantiate(arrowShooter, new Vector3(-10, -32, 0), Quaternion.identity);
+
+                clone.transform.SetParent(transform, false);
+                clone.transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+                clone.transform.localPosition = new Vector3(-10, -32, 0f);
+
+            }
 
 
-            clone.transform.SetParent(transform, false);
-            clone.transform.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
+            if (clone.transform.rotation.y == -90)
+            {
+                Debug.Log("gelp");
+                
+
+            }
+
+
+
 
         }
 
@@ -48,5 +71,7 @@ public class OnWallObj : MonoBehaviour
     void Update()
     {
         
+
+
     }
 }

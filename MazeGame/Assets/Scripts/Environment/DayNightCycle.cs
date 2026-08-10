@@ -13,7 +13,7 @@ public class DayNightCycle : MonoBehaviour
     public bool IsDaytime()
     {
         if (SunLight == null) return true;
-        float sunAngle = SunLight.transform.rotation.eulerAngles.x;
+        float sunAngle = transform.rotation.eulerAngles.x;
         return sunAngle >= 0f && sunAngle < 180f;
     }
 
@@ -26,7 +26,7 @@ public class DayNightCycle : MonoBehaviour
     private IEnumerator OnTimerComplete()
     {
         float elapsed = 0f;
-        var sunStartEuler = SunLight.transform.rotation.eulerAngles;
+        var sunStartEuler = transform.rotation.eulerAngles;
 
         while (true)
         {
@@ -35,7 +35,7 @@ public class DayNightCycle : MonoBehaviour
             elapsed += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
             float progress = (elapsed % cycleSeconds) / cycleSeconds;
             float angle = 360f * progress;
-            SunLight.transform.rotation = Quaternion.Euler(sunStartEuler + new Vector3(angle, 0f, 0f));
+            transform.rotation = Quaternion.Euler(sunStartEuler + new Vector3(angle, 0f, 0f));
             yield return null;
         }
     }

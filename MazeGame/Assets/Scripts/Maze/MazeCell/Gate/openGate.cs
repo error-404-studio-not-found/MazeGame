@@ -95,6 +95,9 @@ public class openGate : MonoBehaviour
             yield return null;
         }
 
+        if (!openGates)
+            killCol.enabled = true;
+
         StartCoroutine(TimerTick());
     }
 }

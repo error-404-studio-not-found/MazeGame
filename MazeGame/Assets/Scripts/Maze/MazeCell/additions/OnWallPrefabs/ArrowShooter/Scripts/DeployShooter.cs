@@ -21,19 +21,16 @@ public class DeployShooter : MonoBehaviour
 
     private float minChange;
 
-    private bool leftDuringDeploy = false;
-    private bool enteredDuringRetract = false;
+    private Vector3 startingPosition;
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        maxChange = transform.localPosition.x - 5f; 
+        startingPosition = transform.localPosition;
+        maxChange = transform.localPosition.x - 5f;
         minChange = transform.localPosition.x;
-
-
     }
 
     // Update is called once per frame
@@ -44,36 +41,26 @@ public class DeployShooter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         deployed = true;
-
-
-
 
         if (!triggered && transform.localPosition.x == minChange)
             StartCoroutine(deployDelay());
-
     }
 
-   
+
 
     private void OnTriggerExit(Collider other)
     {
         deployed = false;
 
-
         if (!triggered && transform.localPosition.x == maxChange)
         {
             StartCoroutine(deployDelay());
         }
-            
-
-
-
     }
+
     IEnumerator deployDelay()
     {
-
         triggered = true;
 
         Debug.Log("waiting");
@@ -81,51 +68,54 @@ public class DeployShooter : MonoBehaviour
         yield return new WaitUntil(() => !isdeploying || !triggered);
 
         StartCoroutine(OnTimerComplete());
-
     }
 
 
     private IEnumerator OnTimerComplete()
     {
-
         Debug.Log("moving shooter");
 
-        float moveDirecZ = 5f;
-
-        if (deployed)
+        while (true)
         {
-            moveDirecZ = -5f;
+            // Determine target position based on deployed state
+            Vector3 targetPos = deployed ?
+                startingPosition + new Vector3(-5f, 0f, 0f) :
+                startingPosition;
+
+            // If already at target, we're done
+            if (Vector3.Distance(transform.localPosition, targetPos) < 0.01f)
+            {
+                transform.localPosition = targetPos;
+                break;
+            }
+
+            // Lerp from current position to target
+            float t = 0f;
+            Vector3 startPos = transform.localPosition;
+
+            while (t < deployTime)
+            {
+                isdeploying = true;
+
+                // Check if the target has changed (player entered/exited during movement)
+                Vector3 currentTargetPos = deployed ?
+                    startingPosition + new Vector3(-5f, 0f, 0f) :
+                    startingPosition;
+
+                if (currentTargetPos != targetPos)
+                {
+                    // Target changed, break out and recalculate from current position
+                    break;
+                }
+
+                t += Time.deltaTime;
+                transform.localPosition = Vector3.Lerp(startPos, targetPos, t / deployTime);
+
+                yield return null;
+            }
         }
-        else if (!deployed)
-        {
-            moveDirecZ = 5f;
-        }
 
-        float t = 0f;
-
-
-
-        var startPosLeft = transform.localPosition;
-
-        Debug.Log("start pos =" + startPosLeft);
-
-        
-
-        while (t < deployTime)
-        {
-            isdeploying = true;
-
-            t += Time.deltaTime;
-
-            transform.localPosition = Vector3.Lerp(startPosLeft, startPosLeft + new Vector3(moveDirecZ, 0f, 0f), t / deployTime);
-
-
-            yield return null;
-
-        }
-
-
-        triggered = false;
         isdeploying = false;
+        triggered = false;
     }
 }

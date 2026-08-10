@@ -180,6 +180,90 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1313410299788346831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7181624987052791376}
+  m_Layer: 0
+  m_Name: ArrowSpawn(0)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7181624987052791376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313410299788346831}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2984669088723675856}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3466147040497044024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2984669088723675856}
+  - component: {fileID: 5314240938686536100}
+  m_Layer: 0
+  m_Name: Shooting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2984669088723675856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3466147040497044024}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7181624987052791376}
+  m_Father: {fileID: 3725841003236336107}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5314240938686536100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3466147040497044024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5670b5154e9e3f94fb8d47aca4dc0224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShootArrows
+  arrow: {fileID: 2193913793336918384, guid: 6dab8cd7500da974dbd7a2d6a1903d7f, type: 3}
+  deployScript: {fileID: 2788646113576525295}
+  arrowSpawns:
+  - {fileID: 7181624987052791376}
+  shootDelay: 3
+  arrowLength: 2
+  fireStrength: 5
+  betweenArrowDelay: 0.2
 --- !u!1 &5171634116182314108
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +350,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2984669088723675856}
   - {fileID: 3575200046445314238}
   m_Father: {fileID: 7970118215936296730}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -304,6 +389,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DeployShooter
   DeployStart: {fileID: 0}
   deployTime: 1
+  isdeploying: 0
+  deployed: 0
 --- !u!1 &5726274659828213446
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,9 +11,9 @@ public class DeployShooter : MonoBehaviour
     [SerializeField]
     private float deployTime;
 
-    private bool isdeploying = false;
+    public bool isdeploying = false;
 
-    private bool deployed = false;
+    public bool deployed = false;
 
     private bool triggered = false;
 
@@ -43,7 +43,7 @@ public class DeployShooter : MonoBehaviour
     {
         deployed = true;
 
-        if (!triggered && transform.localPosition.x == minChange)
+        if (!triggered && transform.localPosition.x == minChange && (other.CompareTag("player") || other.CompareTag("enemy")))
             StartCoroutine(deployDelay());
     }
 
@@ -53,7 +53,7 @@ public class DeployShooter : MonoBehaviour
     {
         deployed = false;
 
-        if (!triggered && transform.localPosition.x == maxChange)
+        if (!triggered && transform.localPosition.x == maxChange && ( other.CompareTag("player") || other.CompareTag("enemy")))
         {
             StartCoroutine(deployDelay());
         }

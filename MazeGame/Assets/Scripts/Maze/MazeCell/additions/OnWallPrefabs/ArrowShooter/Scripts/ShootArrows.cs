@@ -18,7 +18,7 @@ public class ShootArrows : MonoBehaviour
     public float arrowLength;
 
 
-    public float betweenArrowDelay = 0.2f;
+    public float betweenArrowDelay = 5f;
 
     private bool triggered = false;
 
@@ -63,7 +63,7 @@ public class ShootArrows : MonoBehaviour
     {
         for (int i = 0; i < arrowSpawns.Length; i++)
         {
-            StartCoroutine(SpawnDelay(betweenArrowDelay, i));
+            StartCoroutine(SpawnDelay(betweenArrowDelay * i, i));
         }
 
         triggered = false;
@@ -93,11 +93,13 @@ public class ShootArrows : MonoBehaviour
 
         arrowClone = Instantiate(arrow, new Vector3(arrowSpawns[i].position.x, arrowSpawns[i].position.y, arrowSpawns[i].position.z + arrowLength), transform.parent.rotation);
 
-        arrowClone.transform.SetParent(transform, false);
+        arrowClone.transform.SetParent(transform, true);
 
-        //arrowClone.transform.rotation = Quaternion.identity;
+        arrowClone.transform.rotation = Quaternion.Euler(arrowClone.transform.rotation.x, arrowSpawns[i].transform.rotation.y + -90, arrowClone.transform.rotation.z);
 
-        arrowClone.transform.rotation = Quaternion.Euler(arrowClone.transform.rotation.x, transform.parent.parent.parent.rotation.eulerAngles.y + -90, arrowClone.transform.rotation.z);
+        Rigidbody rb = arrowClone.GetComponent<Rigidbody>();
+
+        rb.AddForce(-arrowSpawns[i].transform.right * 50, ForceMode.Impulse);
 
         arrowClone.transform.SetParent(transform, true);
 

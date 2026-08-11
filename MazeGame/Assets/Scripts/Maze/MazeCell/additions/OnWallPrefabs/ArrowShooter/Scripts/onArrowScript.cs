@@ -14,27 +14,27 @@ public class onArrowScript : MonoBehaviour
     void Start()
     {
 
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
 
-        float direction = 1;
+        //float direction = 1;
 
-        Debug.Log(transform.parent.parent.parent.localRotation.eulerAngles);
+        //Debug.Log(transform.parent.parent.parent.localRotation.eulerAngles);
 
-        if (transform.parent.parent.parent.localRotation.eulerAngles.y == 180)
-        {
+        //if (transform.parent.parent.parent.localRotation.eulerAngles.y == 180)
+        //{
 
 
-            rb.AddForce(-transform.forward * fireStrength, ForceMode.Impulse);
+        //    rb.AddForce(-transform.forward * fireStrength, ForceMode.Impulse);
 
-            Debug.Log("check");
+        //    Debug.Log("check");
 
-        }
-        else
-        { 
+        //}
+        //else
+        //{ 
 
-            rb.AddForce(transform.forward * fireStrength, ForceMode.Impulse); 
+        //    rb.AddForce(transform.forward * fireStrength, ForceMode.Impulse); 
 
-        }
+        //}
 
 
         StartCoroutine(destroyDelay(despawnTimeSeconds));

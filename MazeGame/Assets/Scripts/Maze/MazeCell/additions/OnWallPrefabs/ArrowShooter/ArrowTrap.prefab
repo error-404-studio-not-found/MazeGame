@@ -332,9 +332,9 @@ MonoBehaviour:
   - {fileID: 6668324849437443663}
   - {fileID: 2116413499085125910}
   - {fileID: 3131461623085266297}
-  shootDelay: 3
+  shootDelay: 2
   arrowLength: 2
-  betweenArrowDelay: 5
+  betweenArrowDelay: 0
 --- !u!1 &3945715747809235092
 GameObject:
   m_ObjectHideFlags: 0

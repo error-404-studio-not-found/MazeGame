@@ -73,6 +73,8 @@ public class DeployShooter : MonoBehaviour
 
     private IEnumerator OnTimerComplete()
     {
+        isdeploying = true;
+
         Debug.Log("moving shooter");
 
         while (true)
@@ -95,7 +97,7 @@ public class DeployShooter : MonoBehaviour
 
             while (t < deployTime)
             {
-                isdeploying = true;
+
 
                 // Check if the target has changed (player entered/exited during movement)
                 Vector3 currentTargetPos = deployed ?
@@ -114,6 +116,8 @@ public class DeployShooter : MonoBehaviour
                 yield return null;
             }
         }
+
+
 
         isdeploying = false;
         triggered = false;

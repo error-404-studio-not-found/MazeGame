@@ -67,26 +67,39 @@ public class ShootArrows : MonoBehaviour
         }
 
         triggered = false;
+
     }
 
     private IEnumerator SpawnDelay(float waitTime, int index)
     {
-        float timeRemaining = waitTime;
-
-        while (timeRemaining > 0)
+        if (deployScript.deployed)
         {
-            yield return new WaitForSeconds(1f);
-            timeRemaining--;
+
+
+
+            float timeRemaining = waitTime;
+
+            while (timeRemaining > 0)
+            {
+                yield return new WaitForSeconds(1f);
+                timeRemaining--;
+            }
+
+            yield return StartCoroutine(spawnArrow(index));
+
+
         }
-
-
-
-
-        yield return StartCoroutine(spawnArrow(index));
+        else
+        {
+            yield return null;
+            Debug.Log("Cant " + deployScript.deployed);
+        }
     }
 
     private IEnumerator spawnArrow(int i)
     {
+
+
         Debug.Log("shooting");
 
         GameObject arrowClone;

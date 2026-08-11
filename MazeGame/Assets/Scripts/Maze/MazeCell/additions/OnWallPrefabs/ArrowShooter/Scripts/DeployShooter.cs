@@ -44,17 +44,21 @@ public class DeployShooter : MonoBehaviour
         deployed = true;
 
         if (!triggered && transform.localPosition.x == minChange && (other.CompareTag("player") || other.CompareTag("enemy")))
+        {
+            deployed = true;
             StartCoroutine(deployDelay());
+        }
     }
 
 
 
     private void OnTriggerExit(Collider other)
     {
-        deployed = false;
+
 
         if (!triggered && transform.localPosition.x == maxChange && ( other.CompareTag("player") || other.CompareTag("enemy")))
         {
+            deployed = false;
             StartCoroutine(deployDelay());
         }
     }
